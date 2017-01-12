@@ -21,8 +21,8 @@ double getHeight(double a, double b);
 void drawTriangle(GWindow &w, double leftX, double leftY, double size);
 int floodFill(GBufferedImage& image, int x, int y, int newColor);
 int doFloodFill(GBufferedImage& image, int x, int y, int newColor, int originalColor);
-Set<string> generatePersonalCurriculum(Map<string, Vector<string>> & prereqMap, string goal, Set<string> & curriculum);
-void printCurriculum(Set<string> curriculum);
+void generatePersonalCurriculum(Map<string, Vector<string>> & prereqMap, string goal, Set<string> &curriculum);
+void printCurriculum(Set<string> &curriculum);
 
 
 // Returns the greatest common denominator of a and c, displaying the recursive steps to get to the gcd
@@ -119,18 +119,33 @@ int doFloodFill(GBufferedImage& image, int x, int y, int newColor, int originalC
 }
 
 void personalCurriculum(Map<string, Vector<string>> & prereqMap,string goal) {
-    Set<string> test;
-    Set<string> curriculum = generatePersonalCurriculum(prereqMap, goal, test);
+    Set<string> curriculum;
+    generatePersonalCurriculum(prereqMap, goal, curriculum);
+
+    // if (!prereqMap.containsKey(goal) && !curriculum.contains(goal)) {
+    //     curriculum.add(goal);
+    // } else {
+    //     for (string prereq : prereqMap[goal]) {
+    //         if (!curriculum.contains(prereq)) {
+    //             curriculum.add(prereq);
+    //         }
+    //         personalCurriculum(prereqMap, prereq);
+    //     }
+    // }
+
+
 
     // if (!prereqMap.containsKey(goal)) {
     //     if (!curriculum.contains(goal)) {
+    //         cout << goal << endl;
     //         curriculum.add(goal);
     //     }
     // } else {
     //    for (string prereq : prereqMap[goal]) {
     //        personalCurriculum(prereqMap, prereq);
-    //         if (!curriculum.contains(goal)) {
-    //             curriculum.add(goal);
+    //         if (!curriculum.contains(prereq)) {
+    //             cout << prereq << endl;
+    //             curriculum.add(prereq);
     //         }
     //    } 
     // }
@@ -145,7 +160,6 @@ void personalCurriculum(Map<string, Vector<string>> & prereqMap,string goal) {
     // if (!curriculum.contains(goal)) {
     //     curriculum.add(goal);
     // }
-    printCurriculum(curriculum);
 
 }
 
@@ -154,29 +168,50 @@ void personalCurriculum(Map<string, Vector<string>> & prereqMap,string goal) {
  * ---------------------------
  * Iterates through the set of strings and prints each string out to console on sep line.
  */
-void printCurriculum(Set<string> curriculum) {
+void printCurriculum(Set<string> &curriculum) {
     for (string course : curriculum) {
         cout << course << endl;
     }
 }
 
-Set<string> generatePersonalCurriculum(Map<string, Vector<string>> & prereqMap, string goal, Set<string> & curriculum) {
+void generatePersonalCurriculum(Map<string, Vector<string>> & prereqMap, string goal, Set<string> &curriculum) {
+    
+    // if (!prereqMap.containsKey(goal)) {
+    //     if (!curriculum.contains(goal)) {
+    //         cout << goal << endl;
+    //         curriculum.add(goal);
+    //     }
+    // } else {
+    //    for (string prereq : prereqMap[goal]) {
+    //        personalCurriculum(prereqMap, prereq);
+    //         if (!curriculum.contains(prereq)) {
+    //             cout << prereq << endl;
+    //             curriculum.add(prereq);
+    //         }
+    //    } 
+    // }
+    // Vector<string> prereqs = prereqMap[goal];
+    // for (string prereq : prereqs) {
+    //    if (!curriculum.contains(prereq)) {
+    //         cout << prereq << endl;
+    //         curriculum.add(prereq);
+    //    } 
+    // }
+    // for (string prereq : prereqs) {
+    //     generatePersonalCurriculum(prereqMap, prereq, curriculum);
+    // }
 
-    if (!prereqMap.containsKey(goal)) {
-        if (!curriculum.contains(goal)) {
-            curriculum.add(goal);
-        }
-        return curriculum;
-    } 
-    else { 
-        for (string prereq : prereqMap[goal]) {
-            generatePersonalCurriculum(prereqMap, prereq, curriculum);
-            // if (!curriculum.contains(prereq)) {
-            //     curriculum.add(prereq);
-            // }
-       } 
-    }
-    return curriculum;
+     for (string prereq : prereqMap[goal]) {
+        generatePersonalCurriculum(prereqMap, prereq, curriculum);
+        if (!curriculum.contains(prereq)) {
+             cout << prereq << endl;
+             curriculum.add(prereq);
+         }
+     }
+     if (!curriculum.contains(goal)) {
+         cout << goal << endl;
+         curriculum.add(goal);
+     }
 }
 
 string generate(Map<string, Vector<string> > & grammar, string symbol) {
