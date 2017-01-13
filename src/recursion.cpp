@@ -1,5 +1,6 @@
 /* 
- * TODO: Finish this comment.
+ * This file contains the recursive functions that are called in meta.cpp.
+ * The functions teach concepts of recursion.
  */
 
 #include <math.h>
@@ -10,6 +11,7 @@
 #include "gwindow.h"
 #include "gobjects.h"
 #include "tokenscanner.h"
+#include "random.h"
 using namespace std;
 
 // Declare functions
@@ -22,7 +24,7 @@ void drawTriangle(GWindow &w, double leftX, double leftY, double size);
 int floodFill(GBufferedImage& image, int x, int y, int newColor);
 int doFloodFill(GBufferedImage& image, int x, int y, int newColor, int originalColor);
 void generatePersonalCurriculum(Map<string, Vector<string>> & prereqMap, string goal, Set<string> &curriculum);
-void printCurriculum(Set<string> &curriculum);
+string pickRandomString(Vector<string> &v);
 
 
 // Returns the greatest common denominator of a and c, displaying the recursive steps to get to the gcd
@@ -149,8 +151,37 @@ void generatePersonalCurriculum(Map<string, Vector<string>> & prereqMap, string 
      }
 }
 
+/**
+ * Function: Generate
+ * ------------------
+ * Generates a random expansion of grammar using recursion.
+ * In Backus-Naur Form.
+ */
 string generate(Map<string, Vector<string> > & grammar, string symbol) {
-    // your code here
-    cout << "[recursion generate called]" << endl;
-    return "";
+    
+    string result;
+
+    if (!grammar.containsKey(symbol)) { // If terminal, add symbol to result.
+        result += symbol;
+    } else { // If not terminal...
+        Vector<string> vec = grammar[symbol];
+        string random = pickRandomString(vec); // Select random element from vector
+        
+        TokenScanner ts(random); // Parse string for multiple tokens
+        while (ts.hasMoreTokens()) {
+            string token = ts.nextToken();
+            result += generate(grammar, token);
+        }
+    }
+    return result;
+}
+
+/**
+ * Function: Pick Random String
+ * ----------------------------
+ * Selects a random string element from a vector of strings.
+ * If there is only one element in the vector, parses that 
+ */
+string pickRandomString(Vector<string> &v) {
+    return v[randomInteger(0, v.size() - 1)];
 }
