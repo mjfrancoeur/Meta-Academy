@@ -27,7 +27,11 @@ void generatePersonalCurriculum(Map<string, Vector<string>> & prereqMap, string 
 string pickRandomString(Vector<string> &v);
 
 
-// Returns the greatest common denominator of a and c, displaying the recursive steps to get to the gcd
+/**
+ * Function: GCD
+ * -------------
+ * Returns the greatest common denominator of a and c, displaying the recursive steps to get to the gcd
+ */
 int gcd(int a, int b) {
     if (a % b == 0) {
         cout << "gcd(" << a << ", " << b << ") = " << b << endl;
@@ -38,7 +42,11 @@ int gcd(int a, int b) {
     }
 }
 
-// Helper function that switches ints to doubles and calls doSerpinskii
+/**
+ * Function: Serpinskii
+ * --------------------
+ * Helper function that switches ints to doubles and calls doSerpinskii.
+ */
 void serpinskii(GWindow &w, int leftX, int leftY, int size, int order) {
     double dLeftX = leftX;
     double dLeftY = leftY;
@@ -46,7 +54,11 @@ void serpinskii(GWindow &w, int leftX, int leftY, int size, int order) {
     doSerpinskii(w, dLeftX, dLeftY, dSize, order);
 }
 
-// Draws order-k Serpinskii triangles
+/**
+ * Function: Do Serpinskii
+ * -----------------------
+ * Draws order-k Serpinskii triangles
+ */
 void doSerpinskii(GWindow &w, double leftX, double leftY, double size, int order) {
         if (order == 0) {
             drawTriangle(w, leftX, leftY, size);
