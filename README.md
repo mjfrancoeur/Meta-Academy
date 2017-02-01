@@ -1,4 +1,5 @@
 # Meta-Academy
-A learning platform that teaches recursion
+
+Command-line visualization of classic problems in recursion, in C++.
 
 ![Screenshot](assets/menu.png)
